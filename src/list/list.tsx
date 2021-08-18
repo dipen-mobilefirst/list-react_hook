@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './list.css';
+import {AiFillEdit} from 'react-icons/ai';
 
 interface IProps {
 
@@ -35,7 +36,8 @@ class List extends Component <IProps,IState> {
         this.hideModal = this.hideModal.bind(this);
         this.handleValidation = this.handleValidation.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChecked = this.handleChecked.bind(this);
+        this.handleCheckedActive = this.handleCheckedActive.bind(this);
+        this.handleCheckedCreditApp = this.handleCheckedCreditApp.bind(this);
     }
 
     handleValidation(e:{preventDefault: ()=> void}): void {
@@ -75,16 +77,28 @@ class List extends Component <IProps,IState> {
         this.hideModal();
     }
 
-    handleChecked(e:any){
+    handleCheckedActive(e:any){
         e.preventDefault();
 
         let isChecked = e.target.checked;
         if(isChecked){
-            this.setState({active:"active",submit_credit_app:"yes"})
+            this.setState({active:"active"})
+        }else{
+            this.setState({active:"inactive"}) 
+            console.log(this.state.active) 
+        } 
+    }
+
+    handleCheckedCreditApp(e:any){
+        e.preventDefault();
+
+        let isChecked = e.target.checked;
+        if(isChecked){
+            this.setState({submit_credit_app:"yes"})
+        }else{
+            this.setState({submit_credit_app:"no"})
+            console.log(this.state.submit_credit_app)
         }
-        if(!isChecked){
-            this.setState({active:"inactive",submit_credit_app:"no"})
-        }    
     }
 
     showModal(){
@@ -144,7 +158,7 @@ class List extends Component <IProps,IState> {
                                                 </div>
                                                 <div className="col-md-4">
                                                     <label className="switch">
-                                                        <input name="active" type="checkbox" value="active" onChange={(e)=>{this.handleChecked(e)}}/>
+                                                        <input name="active" type="checkbox" value="active" onChange={(e)=>{this.handleCheckedActive(e)}}/>
                                                         <span className="slider round"></span>
                                                     </label>
                                                 </div>
@@ -190,7 +204,7 @@ class List extends Component <IProps,IState> {
                                                 </div>
                                                 <div className="col-md-4">
                                                         <label className="switch">
-                                                            <input name="submit_credit_app" type="checkbox" value="yes" onChange={(e)=>{this.handleChecked(e)}}/>
+                                                            <input name="submit_credit_app" type="checkbox" value="yes" onChange={(e)=>{this.handleCheckedCreditApp(e)}}/>
                                                             <span className="slider round"></span>
                                                         </label>
                                                 </div>
@@ -232,7 +246,7 @@ class List extends Component <IProps,IState> {
                             <td>rshukla@leaptodigital.com</td>
                             <td>08/16/21 @ 05:07 PM</td>
                             <td>Missouri-MS</td>
-                            <td>Edit</td>
+                            <td><AiFillEdit style={{fontSize:"24px"}}/></td>
                         </tr>
                     </tbody>
                 </table>
