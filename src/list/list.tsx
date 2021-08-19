@@ -16,6 +16,9 @@ interface IState {
     search_estimate_for?: string;
     submit_credit_app?: string;
     errors: {[key: string]: string};
+    filter?: string;
+    filterActive?: string;
+    filterInactive?: string;
 }
 
 class List extends Component <IProps,IState> {
@@ -30,6 +33,9 @@ class List extends Component <IProps,IState> {
             licence_number: "",
             search_estimate_for: "",
             submit_credit_app: "",
+            filter: "",
+            filterActive: "",
+            filterInactive: "",
             errors: {},
         }
         this.showModal = this.showModal.bind(this);
@@ -38,6 +44,7 @@ class List extends Component <IProps,IState> {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCheckedActive = this.handleCheckedActive.bind(this);
         this.handleCheckedCreditApp = this.handleCheckedCreditApp.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
     }
 
     handleValidation(e:{preventDefault: ()=> void}): void {
@@ -101,6 +108,31 @@ class List extends Component <IProps,IState> {
         }
     }
 
+    handleFilter(e:any){
+        e.preventDefault();
+        let filter = e.target.value;
+        
+        console.log(filter);
+        if(filter==="active"){
+            this.setState({
+                filterActive: "table-row",
+                filterInactive: "none"
+            })
+        }
+        if(filter==="inactive"){
+            this.setState({
+                filterActive:"none",
+                filterInactive:"table-row"
+            })
+        }
+        if(filter==="all"){
+            this.setState({
+                filterActive:"table-row",
+                filterInactive:"table-row"
+            })
+        }
+    }
+
     showModal(){
         this.setState({isOpen:true});
     }
@@ -116,7 +148,7 @@ class List extends Component <IProps,IState> {
                         <tr>
                             <td style={{width:"10%"}}>
                                 <form className="form">
-                                    <select>
+                                    <select onClick={(e)=>{this.handleFilter(e)}}>
                                         <option value="all">All</option>
                                         <option value="active">Active</option>
                                         <option value="inactive">InActive</option>
@@ -223,7 +255,7 @@ class List extends Component <IProps,IState> {
                     </thead>
                 </table>
                 <div style={{margin:"2%"}}></div>
-                <table style={{width:"95%"}}>
+                <table className="table table-border" style={{width:"95%"}}>
                     <thead style={{background:"#f3f0f0"}}>
                         <tr>
                             <th>Active</th>
@@ -235,16 +267,68 @@ class List extends Component <IProps,IState> {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr style={{display:`${this.state.filterActive}`}}>
                             <td>
                                 <label className="switch">
-                                    <input type="checkbox" defaultChecked/>
+                                    <input type="checkbox" name="active" defaultChecked/>
                                     <span className="slider round"></span>
                                 </label>
                             </td>
                             <td>Check Shukla</td>
                             <td>rshukla@leaptodigital.com</td>
                             <td>08/16/21 @ 05:07 PM</td>
+                            <td>Missouri-MS</td>
+                            <td><AiFillEdit style={{fontSize:"24px"}}/></td>
+                        </tr>
+                        <tr style={{display:`${this.state.filterInactive}`}}>
+                            <td>
+                                <label className="switch">
+                                    <input type="checkbox" name="inactive"/>
+                                    <span className="slider round"></span>
+                                </label>
+                            </td>
+                            <td>Check Alex</td>
+                            <td>alex@leaptodigital.com</td>
+                            <td>08/18/21 @ 10:07 AM</td>
+                            <td>Missouri-MS</td>
+                            <td><AiFillEdit style={{fontSize:"24px"}}/></td>
+                        </tr>
+                        <tr style={{display:`${this.state.filterInactive}`}}>
+                            <td>
+                                <label className="switch">
+                                    <input type="checkbox" name="inactive"/>
+                                    <span className="slider round"></span>
+                                </label>
+                            </td>
+                            <td>Check Gary</td>
+                            <td>gary@leaptodigital.com</td>
+                            <td>08/19/21 @ 03:07 PM</td>
+                            <td>Missouri-MS</td>
+                            <td><AiFillEdit style={{fontSize:"24px"}}/></td>
+                        </tr>
+                        <tr style={{display:`${this.state.filterActive}`}}>
+                            <td>
+                                <label className="switch">
+                                    <input type="checkbox" name="active" defaultChecked/>
+                                    <span className="slider round"></span>
+                                </label>
+                            </td>
+                            <td>Check Henrry</td>
+                            <td>henrry@leaptodigital.com</td>
+                            <td>08/15/21 @ 09:00 PM</td>
+                            <td>Missouri-MS</td>
+                            <td><AiFillEdit style={{fontSize:"24px"}}/></td>
+                        </tr>
+                        <tr style={{display:`${this.state.filterActive}`}}>
+                            <td>
+                                <label className="switch">
+                                    <input type="checkbox" name="active" defaultChecked/>
+                                    <span className="slider round"></span>
+                                </label>
+                            </td>
+                            <td>Check Daniel</td>
+                            <td>daniel@leaptodigital.com</td>
+                            <td>08/6/21 @ 11:00 AM</td>
                             <td>Missouri-MS</td>
                             <td><AiFillEdit style={{fontSize:"24px"}}/></td>
                         </tr>
